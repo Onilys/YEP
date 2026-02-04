@@ -1,0 +1,183 @@
+{% extends 'news/base.html' %}
+{% block content %}
+    <h1 class="text-3xl 
+    font-bold 
+    mb-5 
+    text-center 
+    underline 
+    atomic-blue">
+    {% if info_id %}
+            Formulaire de modification</h1>
+            <!-- Mode modification -->
+    {% else %}
+            Formulaire d'ajout</h1>
+            <!-- Mode création -->
+    {% endif %}
+
+    <!-- Conteneur principal du formulaire -->
+    <div class="max-w-4xl 
+    mx-auto 
+    p-6 
+    bg-white 
+    rounded-lg 
+    shadow-xl">
+        <form method="post" class="space-y-6">
+            <!-- Token CSRF obligatoire pour la sécurité -->
+            {% csrf_token %}
+
+            <!-- Champ Titre -->
+            <div style="color: #0089b9;"
+            class="mb-4">
+                <label for="titre" 
+                class="block 
+                text-xl 
+                font-semibold 
+                mb-2 ">
+                Titre</label>
+                <input
+                    type="text"
+                    id="titre"
+                    name="titre"
+                    value="{{ form.initial.titre }}"
+                    class="w-full 
+                    p-2 
+                    border-gray-200 
+                    rounded-lg 
+                    shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                    hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                    transition-shadow 
+                    duration-300"
+                    required>
+            </div>
+
+            <!-- Champ Lien avec validation URL -->
+            <div style="color: #0089b9;"
+            class="mb-4">
+                <label for="lien" 
+                class="block 
+                text-xl 
+                font-semibold 
+                mb-2">
+                Lien</label>
+                <input
+                    type="url"
+                    id="lien"
+                    name="lien"
+                    value="{{ form.initial.lien }}"
+                    class="w-full 
+                    p-2 
+                    border 
+                    border-gray-200 
+                    rounded-lg 
+                    shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                    hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                    transition-shadow 
+                    duration-300"
+                    required>
+            </div>
+
+            <!-- Zone de texte pour les commentaires -->
+            <div style="color: #0089b9;"
+            class="mb-4">
+                <label for="commentaire" 
+                class="block 
+                text-xl 
+                font-semibold 
+                mb-2">
+                Commentaire</label>
+                <textarea
+                    id="commentaire"
+                    name="commentaire"
+                    rows="5"
+                    class="w-full 
+                    p-2 
+                    border 
+                    border-gray-200 
+                    rounded-lg 
+                    shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                    hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                    transition-shadow 
+                    duration-300"
+                >{{ form.initial.commentaire }}</textarea>
+            </div>
+
+            <!-- Case à cocher pour la visibilité -->
+            <div style="color: #0089b9;"
+            class="mb-4">
+                <label for="visible" 
+                class="block text-xl 
+                font-semibold 
+                mb-2">
+                Visible</label>
+                <input
+                    type="checkbox"
+                    id="visible"
+                    name="visible"
+                    {% if form.initial.visible %}checked{% endif %}
+                    class="w-4 
+                    h-4 
+                    text-blue-600 
+                    bg-gray-100 
+                    border-gray-300 
+                    rounded 
+                    focus:ring-blue-500 
+                    dark:focus:ring-blue-600 
+                    dark:ring-offset-gray-800 
+                    focus:ring-2 
+                    dark:bg-gray-700 
+                    dark:border-gray-600">
+            </div>
+
+            <!-- Boutons d'action - différents selon le mode -->
+            <div class="flex justify-end space-x-4">
+                {% if info_id %}
+                    <!-- Bouton Modifier et lien Supprimer en mode édition -->
+                    <button 
+                    style="background-color: #0089b9;"
+                        type="submit"
+                        class="px-4 
+                        py-2
+                        text-white 
+                        rounded-lg 
+                        shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                        hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                        transition-shadow 
+                        duration-300 
+                        hover:bg-blue-900">
+                        Modifier
+                    </button>
+                    <a
+                        href="{% url 'supprimer_info' info_id %}"
+                        class="px-4 
+                        py-2 
+                        bg-red-600 
+                        text-white 
+                        rounded-lg 
+                        shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                        hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                        transition-shadow 
+                        duration-300 
+                        hover:bg-red-900">
+                        Supprimer
+                    </a>
+                {% else %}
+                    <!-- Bouton Ajouter en mode création -->
+                    <button
+                        style="background-color: #0089b9;"
+                        type="submit"
+                        class="px-4 
+                        py-2
+                        text-white 
+                        rounded-lg 
+                        shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                        hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                        transition-shadow 
+                        duration-300 
+                        hover:bg-blue-900">
+                        Ajouter
+                    </button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

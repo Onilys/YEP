@@ -1,0 +1,36 @@
+{% load static tailwind_tags %}
+<!--style mettant deux barres bleu sur les cotés et une bandes blanche centrale-->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="icon" type="image/x-icon" href="https://media.onilys.fr/img/favicon.png">
+    {% tailwind_css %}
+</head>
+
+<body style="background-color: #0089b9; padding: 20px; color: white;"
+class="min-h-screen flex justify-center">
+    <!-- Conteneur principal de la page -->
+    <div class="w-full
+    max-w-4xl
+    min-h-screen
+    bg-white
+    shadow-lg
+    rounded-lg
+    p-4
+    mx-auto">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Script JavaScript pour recharger la page automatiquement -->
+    <script>
+        // Recharger la page toutes les 6 heures (21600000 millisecondes)
+        setTimeout(function() {
+            location.reload();
+        }, 21600000);
+    </script>
+</body>
+</html>

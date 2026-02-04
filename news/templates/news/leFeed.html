@@ -1,0 +1,116 @@
+{% extends 'news/base.html' %}
+{% block content %}
+    <h1 class="text-3xl 
+    font-bold 
+    mb-5 
+    text-center 
+    underline 
+    text-blue-600">leFeed</h1>
+
+    <!-- Conteneur principal des infos -->
+    <div class="max-w-4xl 
+    mx-auto 
+    p-6 
+    bg-white 
+    rounded-lg 
+    shadow-xl">
+        <!-- Boutons d'action différents selon l'état de connexion -->
+        {% if user.is_authenticated %}
+            <div class="flex justify-end mb-4">
+                <a href="{% url 'ajout' %}"
+                class="px-4 
+                py-2 
+                bg-blue-600 
+                text-white 
+                rounded-lg 
+                shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                transition-shadow 
+                duration-300 
+                hover:bg-blue-900">
+                Ajouter une info</a>
+            </div>
+        {% else %}
+            <div class="flex justify-end mb-4">
+                <a href="{% url 'admin:index' %}"
+                class="px-4 
+                py-2 
+                bg-blue-600 
+                text-white 
+                rounded-lg 
+                shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                transition-shadow 
+                duration-300 
+                hover:bg-blue-900">
+                Se connecter</a>
+            </div>
+        {% endif %}
+
+        <!-- Liste des infos visibles -->
+        {% for info in infos %}
+            {% if info.visible %}
+                <!-- Carte d'information avec effets visuels -->
+                <div class="mb-4 
+                p-4 
+                border 
+                border-gray-200 
+                rounded-lg 
+                shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                transition-shadow 
+                duration-300">
+                    <!-- Titre cliquable pour modification -->
+                    <a href="{% url 'modifier_info' info.id %}"
+                    class="text-xl 
+                    font-semibold 
+                    text-blue-600 
+                    hover:text-blue-900 
+                    transition-colors 
+                    duration-300">
+                    {{ info.titre }}</a>
+
+                    <!-- Contenu textuel si présent -->
+                    {% if info.commentaire %}
+                        <p class="mt-2">{{ info.commentaire }}</p>
+                    {% endif %}
+
+                    <!-- Image de prévisualisation si disponible -->
+                    {% if info.meta_image %}
+                        <a href="{{ info.lien }}" 
+                        class="block mt-2" 
+                        target="_blank" 
+                        rel="noopener noreferrer">
+                            <img src="{{ info.meta_image }}" 
+                            alt="Image de {{ info.titre }}"
+                            class="w-full 
+                            h-auto 
+                            rounded-lg 
+                            shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                            hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                            transition-shadow 
+                            duration-300">
+                        </a>
+                    {% endif %}
+                    <!-- Options d'administration pour les utilisateurs connectés -->
+                    {% if user.is_authenticated %}
+                        <div class="flex justify-end mt-2">
+                            <a href="{% url 'supprimer_info' info.id %}"
+                            class="px-4 
+                            py-2 
+                            bg-red-600 
+                            text-white 
+                            rounded-lg 
+                            shadow-[0_4px_6px_rgba(0,0,0,0.6)] 
+                            hover:shadow-[0_4px_6px_rgba(0,0,0,0.8)] 
+                            transition-shadow 
+                            duration-300 
+                            hover:bg-red-900">
+                            Supprimer</a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
