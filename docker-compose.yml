@@ -27,11 +27,11 @@ services:
             DEBUG: ${DEBUG}
             DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
         ports:
-            - "8000:8000"
+            - "9111:9111"
         env_file: 
             - .env
         healthcheck:
-            test: ["CMD", "curl -f http://localhost:8000 || exit 1"]
+            test: ["CMD", "curl -f http://localhost:9111 || exit 1"]
             timeout: 30s
             interval: 1m
             retries: 3
