@@ -54,12 +54,12 @@ COPY --chown=appuser:appuser . .
 # Définit "appuser" comme utilisateur par défaut pour les commandes suivantes
 USER appuser
 
-# Indique que le conteneur écoutera sur le port 8000 
-EXPOSE 8000
+# Indique que le conteneur écoutera sur le port 9111 
+EXPOSE 9111
 
 # Définit "/leFeed" comme répertoire de travail
 WORKDIR /leFeed
 #CMD ["ls"]
-#l#ancement du serveur de développement Django sur le port 8000
-#CMD ["python","manage.py","runserver","0.0.0.0:8000"]
-CMD ["gunicorn","leFeed.wsgi","--bind","0.0.0.0:8000","--workers","3"]
+#l#ancement du serveur de développement Django sur le port 9111
+#CMD ["python","manage.py","runserver","0.0.0.0:9111"]
+CMD ["gunicorn","leFeed.wsgi","--bind","0.0.0.0:9111","--workers","3"]
