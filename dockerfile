@@ -62,4 +62,4 @@ WORKDIR /leFeed
 #CMD ["ls"]
 #l#ancement du serveur de développement Django sur le port 9111
 #CMD ["python","manage.py","runserver","0.0.0.0:9111"]
-CMD ["gunicorn","leFeed.wsgi","--bind","0.0.0.0:9111","--workers","3"]
+CMD ["gunicorn","leFeed.wsgi","--bind","django-web:9111","--workers","3"]
